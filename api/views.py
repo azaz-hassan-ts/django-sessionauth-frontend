@@ -1,4 +1,6 @@
+from os import error
 import re
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from rest_framework import generics, serializers, status, viewsets, views
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -11,12 +13,15 @@ from rest_framework.decorators import (
     authentication_classes,
     permission_classes,
 )
-import requests
 from .serializers import (
     LoginSerializer,
     RegistrationSerializer,
     ProfileSerializer,
 )
+
+
+def homepage(request):
+    return render(request, "api/home.html")
 
 
 class LoginView(generics.CreateAPIView):
@@ -35,27 +40,27 @@ class LoginView(generics.CreateAPIView):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return Response(
-                    {"message": "You are logged in."}, status=status.HTTP_200_OK
-                )
+                return redirect("api:home")
             return Response(
                 {"message": "Your account has been disabled"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        return Response(
-            {"message": "Invalid Credentials"}, status=status.HTTP_403_FORBIDDEN
+        return render(
+            request,
+            "api/login.html",
+            {"message": "Invalid Credentials"},
+            status=status.HTTP_400_BAD_REQUEST,
         )
 
-    def get(self, request, format=None)
+    def get(self, request, format=None):
+        return render(request, "api/login.html", {})
 
 
 @api_view(["GET"])
 @permission_classes((IsAuthenticated,))
 def logout_view(request):
     logout(request)
-    return Response(
-        {"message": "User is succesfully logged out"}, status=status.HTTP_200_OK
-    )
+    return redirect("api:home")
 
 
 class RegisterView(generics.CreateAPIView):
@@ -72,14 +77,22 @@ class RegisterView(generics.CreateAPIView):
         register_serializer = RegistrationSerializer(data=request.data)
         if register_serializer.is_valid():
             register_serializer.save()
-            return Response(
-                {
-                    "data": register_serializer.data,
-                    "message": "You are succesfully registered",
-                },
-                status=status.HTTP_201_CREATED,
-            )
-        return Response(register_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return redirect("api:login")
+        errors = [
+            register_serializer.errors[error][0] for error in register_serializer.errors
+        ]
+        for i in range(len(errors)):
+            if errors[i] == "This field must be unique.":
+                errors[i] = "Email must be unique"
+        return render(
+            request,
+            "api/signup.html",
+            {"errors": errors},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    def get(self, request, format=None):
+        return render(request, "api/signup.html")
 
 
 class ProfileView(generics.CreateAPIView):
@@ -94,12 +107,7 @@ class ProfileView(generics.CreateAPIView):
             username = str(request.user)
             user = User.objects.get(username=username)
             if user.is_active:
-                return Response(
-                    {
-                        "username": user.username,
-                        "email": user.email,
-                    }
-                )
+                return render(request, "api/profile.html", {"person": user})
             logout(request)
             return Response(
                 {"message": "Your account is disabled. Please log in again"},

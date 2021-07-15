@@ -1,3 +1,4 @@
+from os import name
 from django.urls import path, re_path
 from django.conf.urls import url
 from . import views
@@ -23,8 +24,11 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     url(
-        "^$", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"
+        "^test$",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
     ),
+    path("", views.homepage, name="home"),
     path("login/", views.LoginView.as_view(), name="login"),
     path("logout/", views.logout_view, name="logout"),
     path("register/", views.RegisterView.as_view(), name="register"),

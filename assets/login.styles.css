@@ -1,0 +1,37 @@
+#login {
+
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#login > h1 {
+    text-align: center;
+}
+
+input[type="text"], input[type="password"] {
+    display: block;
+    margin : 10px auto;
+    border: 1px solid black;
+    box-shadow: 2px 2px 5px grey;
+    height: 35px;
+    width: 200px;
+    border-radius: 5px;
+    padding-left: 20px;
+    font-size: 20px;
+}
+
+input[type='submit'] {
+    display: block;
+    margin : 10px auto;
+    margin-top: 20px;
+    height: 30px;
+    width: 70px;
+}
+
+input[type='submit']:hover {
+    box-shadow: 1px 1px 5px black;
+}
