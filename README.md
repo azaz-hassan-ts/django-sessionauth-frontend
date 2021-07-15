@@ -1,6 +1,6 @@
 # djangoauth-2.0-sessionauth
 
-## Deployed at https://restsessionauth.herokuapp.com/
+## Deployed at https://sessionauthfrontend.herokuapp.com/
 
 # Python: Getting Started
 
@@ -46,15 +46,15 @@ or
 ## Swagger Documentation Hits
 
 
-### Got to https://restsessionauth.herokuapp.com/ to see swagger spec document
+### Got to https://sessionauthfrontend.herokuapp.com/test/ to see swagger spec document
 #### Note: Session Auth is integrated in Swagger Spec document
 #### API HIT CYCLE:
 
 ```
-1. Create a register from swagger link
-2. Click on login and send required username and password, it will return a cookie which swagger automatically stores in browser and a session in created
-3. Now click on profile (GET) to get information and profile (put) to change username, email, first_name and last_name
-4. Logout and it will destroy the session
+1. Create a user on signup page
+2. login, it will start session and show username
+3. OPen profile and it will show details
+4. logout and profile won't be available now
 ```
 
 ## Documentation
