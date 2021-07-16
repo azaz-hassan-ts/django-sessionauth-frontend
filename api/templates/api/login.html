@@ -7,22 +7,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'login.styles.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <title>LogIn</title>
 </head>
 
 <body>
-    <div id="login">
+    <div id="login" class="card">
         <h1>Login</h1>
         <hr style="color: gray; opacity: 0.3; margin-bottom: 30px;">
+        {% if user.is_authenticated %}
         <div id="logged-in">
-            {% if user.is_authenticated %}
             <h5>You are already logged in as {{ user.username }}</h5>
-            <hr style="color: gray; opacity: 0.3; margin: 50px auto; width: 50%; ">
+            <hr style="color: gray; opacity: 0.3; margin: 40px auto; width: 50%; ">
             <div id="links-if-logged-in">
                 <a href="{% url 'api:home' %}">Go to Home</a>
                 <a href="{% url 'api:profile' %}">Go to Profile</a>
             </div>
+            <form id="logout-link" action="{% url 'api:logout' %}" method="get">
+                {% csrf_token %}
+                <button type="submit">LOGOUT</button>
+            </form>
         </div>
         {% else %}
         <form action="{% url 'api:login' %}" method="POST">

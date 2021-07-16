@@ -1,16 +1,35 @@
 body {
     background-color: #bbe3fa;
+    padding: 0;
+    margin: 0;
 }
 
 #login {
+    height: 400px;
+    width: 350px;
+}
+
+#signup {
+    top: 50%;
+    height: 625px;
+    width: 350px;
+}
+
+#home {
+    top: 50%;
+    height: 300px;
+    width: 350px;
+    background-color: rgb(44, 88, 114);
+
+}
+
+.card {
     align-items: center;
     position: absolute;
     left: 50%;
     top: 40%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    height: 400px;
-    width: 350px;
     background-color: white;
     border-radius: 2px;
     font-family: -apple-system, BlinkMacSystemFont, 
@@ -27,30 +46,34 @@ h5 {
     text-align: center;
 }
 
-#links-if-logged-in > a {
+#links-if-logged-in > a, #logout-link {
     text-decoration: none;
     display: block;
     background-color: #86a3b4;
     border: 1px solid rgba(0, 0, 0, 0.19);
     border-radius: 2px;
-    width: 30%;
+    width: 35%;
     margin: auto;
-    width: 130px;
     margin-bottom: 10px;
     text-align: center;
 }
-a, a:hover, a:visited {
+a, a:hover, a:visited{
     color: rgb(44, 88, 114);
     text-decoration: none;
 }
 
-#login > h1 {
+.card > h1 {
     text-align: center;
     color: grey;
     font-weight: lighter;
 }
 
-input[type="text"], input[type="password"] {
+#logout-link > button {
+    background-color: transparent;
+    border: none;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
     display: block;
     margin : 10px auto;
     border: 1px solid black;
@@ -64,6 +87,10 @@ input[type="text"], input[type="password"] {
     opacity: 0.7;
 }
 
+#signup label { 
+    margin : 15px 10% -5px;
+}
+
 input[type="text"]:focus, input[type="password"]:focus {
     box-shadow: 0 4px 8px 0 rgba(173, 236, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -75,10 +102,9 @@ label {
     font-size: 15px;
 }
 
-input[type='submit'] {
+input[type='submit'], button[type='submit'] {
     display: block;
     margin : 10px auto;
-    margin-top: 20px;
     height: 40px;
     width: 130px;
     border: 1px solid rgba(0, 0, 0, 0.19);
@@ -90,12 +116,95 @@ input[type='submit'] {
     color: rgb(169, 205, 226);
 }
 
+#signup input[type='submit'] {
+    margin-top: 25px;
+    margin-bottom: 0;
+}
+
+#logout-link {
+    margin-top: 30px;
+    height: 40px;
+    width: 130px;
+    padding: 0;
+    background-color: rgba(255, 109, 109, 0.5);
+}
+
+
+button[type='submit'] {
+    margin : 10px auto;
+    height: 20px;
+    color: rgba(207, 34, 34, 0.6);
+    opacity: 1;
+}
+
+#logout-link:hover {
+    background-color: rgba(255, 109, 109, 0.8);
+    color: rgba(207, 34, 34, 0.9);
+}
+
+
 input[type='submit']:hover {
     background-color: #86a3b4;
 }
 
 #invalid-message {
+    margin-top: -7px;
     text-align: center;
     color: rgba(255, 65, 65, 0.7);
     font-size: 12px;
+}
+
+.error {
+    color: rgba(255, 65, 65, 1);
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+  
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #04AA6D;
+}
+
+.auth-home {
+    margin: 0;
+    background-color: rgba(207, 34, 34, 0.6);
+    float: right;
+}
+
+
+.auth-home:hover {
+    background-color: rgba(207, 34, 34, 0.6);
+}
+
+.auth-home button {
+    background-color: transparent;
+    border: none;
+    height: 100%;
+    margin : 14px auto;
+}
+
+#home li {
+    text-decoration: none;
+    list-style-type: none;
 }

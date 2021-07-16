@@ -7,29 +7,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'home.styles.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <title>Home</title>
 </head>
 
 <body>
-    {% if user.is_authenticated %}
-    <h1>Hello, {{ user.username }}</h1>
-    <form class="logout-link" action="{% url 'api:logout' %}" method="get">
-        {% csrf_token %}
-        <button type="submit">Log Out</button>
-    </form>
-    <li>
-        <a href="{% url 'api:profile' %}">Profile</a>
-    </li>
-    {% else %}
-    <h3>You are not logged in. Please login/Signup</h3>
-    <li>
-        <a href="{% url 'api:login' %}">Login</a>
-    </li>
-    <li>
-        <a href="{% url 'api:register' %}">SignUp</a>
-    </li>
-    {% endif %}
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="{% url 'api:profile' %}">About</a></li>
+        {% if user.is_authenticated %}
+        <li class="logout-link auth-home">
+            <form action="{% url 'api:logout' %}" method="get">
+                {% csrf_token %}
+                <button type="submit">Log Out</button>
+            </form>
+        </li>
+        {% else %}
+        <li style="float: right;">
+            <a href="{% url 'api:login' %}">Login</a>
+        </li>
+        <li class="" style="float: right;">
+            <a href="{% url 'api:register' %}">SignUp</a>
+        </li>
+        {% endif %}
+    </ul>
+    <div id="home" class="card">
+        {% if user.is_authenticated %}
+        <h1>Hello, {{ user.first_name.capitalize}}</h1>
+        <div id="links-if-logged-in">
+            <a href="{% url 'api:profile' %}">Go to Profile</a>
+        </div>
+        {% else %}
+        <h1>You are not logged in. Please login/Signup</h1>
+        {% endif %}
+
+    </div>
 </body>
 
 </html>
