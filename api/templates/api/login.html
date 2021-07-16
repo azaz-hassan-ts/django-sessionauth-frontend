@@ -13,22 +13,32 @@
 
 <body>
     <div id="login">
-        <h1>Log In</h1>
-        {% if user.is_authenticated %}
-        <h2>You are already logged in.</h2>
-        <a href="{% url 'api:home' %}">Go to Home</a>
-        <a href="{% url 'api:profile' %}">Go to Profile</a>
+        <h1>Login</h1>
+        <hr style="color: gray; opacity: 0.3; margin-bottom: 30px;">
+        <div id="logged-in">
+            {% if user.is_authenticated %}
+            <h5>You are already logged in as {{ user.username }}</h5>
+            <hr style="color: gray; opacity: 0.3; margin: 50px auto; width: 50%; ">
+            <div id="links-if-logged-in">
+                <a href="{% url 'api:home' %}">Go to Home</a>
+                <a href="{% url 'api:profile' %}">Go to Profile</a>
+            </div>
+        </div>
         {% else %}
         <form action="{% url 'api:login' %}" method="POST">
             {% csrf_token %}
-            <input type="text" name="username" required placeholder="Username">
-            <input type="password" name="password" required placeholder="Password">
-            <input type="submit" name="" id="" value="LogIn">
+            <label for="username">Username</label>
+            <input type="text" name="username" required placeholder="Enter Username">
+            <label for="password">Password</label>
+            <input type="password" name="password" required placeholder="Enter Password">
+            <input type="submit" name="" id="" value="LOGIN">
         </form>
         {% endif %}
-        {% if message %}
-        {{ message }}
-        {% endif %}
+        <div id="invalid-message">
+            {% if message %}
+            {{ message }}
+            {% endif %}
+        </div>
     </div>
 </body>
 
