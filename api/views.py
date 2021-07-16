@@ -1,5 +1,6 @@
 from os import error
 import re
+from django.http.response import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from rest_framework import generics, serializers, status, viewsets, views
@@ -18,6 +19,23 @@ from .serializers import (
     RegistrationSerializer,
     ProfileSerializer,
 )
+from rest_framework.views import exception_handler
+from rest_framework.exceptions import NotAuthenticated
+from rest_framework.response import Response
+
+
+def custom_exception_handler(exc, context):
+    if isinstance(exc, NotAuthenticated):
+        response = exception_handler(exc, context)
+
+        if response is not None:
+            status_code = response.status_code
+            detail = "Unauthorized !"
+            return HttpResponseNotFound(
+                f"<h1>{detail}</h1><br><h2>Status Code: {status_code}</h2>"
+            )
+        return response
+    return exception_handler(exc, context)
 
 
 def homepage(request):
